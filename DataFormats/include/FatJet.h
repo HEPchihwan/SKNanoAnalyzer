@@ -2,6 +2,7 @@
 #define FatJet_h
 
 #include "Particle.h"
+#include "JetTaggingParameter.h"
 
 class FatJet : public Particle {
 
@@ -84,7 +85,7 @@ public:
     };
 
     bool PassID(TString ID) const;
-    // TODO  double GetTaggerResult(JetTagging::Tagger tg) const;
+    double GetTaggerResult(JetTagging::FatJetTaggingtype tg , JetTagging::FatjetTaggingObject obj) const;
 
 private:
     bool j_looseJetId;

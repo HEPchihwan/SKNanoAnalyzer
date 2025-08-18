@@ -66,37 +66,57 @@ bool FatJet::PassID(TString ID) const {
 
 }
 
-/* TODO implement FatJet::GetTaggerResult
 
-double FatJet::GetTaggerResult(JetTagging::Tagger tg) const{
+double FatJet::GetTaggerResult(JetTagging::FatJetTaggingtype tg, JetTagging::FatjetTaggingObject obj) const {
     
-    if     (tg==JetTagging::DeepDoubleX_HZbbvsQCD)        return j_btagDDBvLV2;
-    else if(tg==JetTagging::DeepDoubleX_HZccvsHZbb)       return j_btagDDCvBV2;
-    else if(tg==JetTagging::DeepDoubleX_HZccvsQCD)        return j_btagDDCvLV2;
-    else if(tg==JetTagging::DeepCSV_?)                    return j_btagDeepB;
-    else if(tg==JetTagging::HiggsToBB)                    return j_btagHbb;
-    else if(tg==JetTagging::particleNetWithMass_H4qvsQCD) return j_particleNetWithMass_H4qvsQCD;
-    else if(tg==JetTagging::particleNetWithMass_HccvsQCD) return j_particleNetWithMass_HccvsQCD;
-    else if(tg==JetTagging::particleNetWithMass_HbbvsQCD) return j_particleNetWithMass_HbbvsQCD;
-    else if(tg==JetTagging::particleNetWithMass_QCD)      return j_particleNetWithMass_QCD;
-    else if(tg==JetTagging::particleNetWithMass_TvsQCD)   return j_particleNetWithMass_TvsQCD;
-    else if(tg==JetTagging::particleNetWithMass_WvsQCD)   return j_particleNetWithMass_WvsQCD;
-    else if(tg==JetTagging::particleNetWithMass_ZvsQCD)   return j_particleNetWithMass_ZvsQCD;
-    else if(tg==JetTagging::particleNet_QCD)              return j_particleNet_QCD;
-    else if(tg==JetTagging::particleNet_QCD0HF)           return j_particleNet_QCD0HF;
-    else if(tg==JetTagging::particleNet_QCD1HF)           return j_particleNet_QCD1HF;
-    else if(tg==JetTagging::particleNet_QCD2HF)           return j_particleNet_QCD2HF;
-    else if(tg==JetTagging::particleNet_XbbVsQCD)         return j_particleNet_XbbVsQCD;
-    else if(tg==JetTagging::particleNet_XccVsQCD)         return j_particleNet_XccVsQCD;
-    else if(tg==JetTagging::particleNet_XqqVsQCD)         return j_particleNet_XqqVsQCD;
-    else if(tg==JetTagging::particleNet_XggVsQCD)         return j_particleNet_XggVsQCD;
-    else if(tg==JetTagging::particleNet_XteVsQCD)         return j_particleNet_XteVsQCD;
-    else if(tg==JetTagging::particleNet_XtmVsQCD)         return j_particleNet_XtmVsQCD;
-    else if(tg==JetTagging::particleNet_XttVsQCD)         return j_particleNet_XttVsQCD;
-    else if(tg==JetTagging::particleNet_massCorr)         return j_particleNet_massCorr;
-    else{
-        cout << "[FatJet::GetTaggerResult] ERROR; Wrong tagger" << endl;
+    if (tg == JetTagging::FatJetTaggingtype::DeepDoubleX) {
+        if (obj == JetTagging::FatjetTaggingObject::H4qvsQCD)        return j_btagDDBvLV2;
+        else if (obj == JetTagging::FatjetTaggingObject::HccvsQCD)   return j_btagDDCvBV2;
+        else if (obj == JetTagging::FatjetTaggingObject::HbbvsQCD)   return j_btagDDCvLV2;
+        else if (obj == JetTagging::FatjetTaggingObject::QCD)        return j_btagDeepB;
+        else if (obj == JetTagging::FatjetTaggingObject::TvsQCD)     return j_btagHbb;
+        else {
+            cout << "[FatJet::GetTaggerResult] ERROR; Wrong DeepDoubleX object" << endl;
+            return -999;
+        }
+    }
+    else if (tg == JetTagging::FatJetTaggingtype::DeepCSV) {
+        return j_btagDeepB;
+    }
+    else if (tg == JetTagging::FatJetTaggingtype::ParticleNet) {
+        if (obj == JetTagging::FatjetTaggingObject::QCD)            return j_particleNet_QCD;
+        else if (obj == JetTagging::FatjetTaggingObject::QCD0HF)    return j_particleNet_QCD0HF;
+        else if (obj == JetTagging::FatjetTaggingObject::QCD1HF)    return j_particleNet_QCD1HF;
+        else if (obj == JetTagging::FatjetTaggingObject::QCD2HF)    return j_particleNet_QCD2HF;
+        else if (obj == JetTagging::FatjetTaggingObject::XbbVsQCD)  return j_particleNet_XbbVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XccVsQCD)  return j_particleNet_XccVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XqqVsQCD)  return j_particleNet_XqqVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XggVsQCD)  return j_particleNet_XggVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XteVsQCD)  return j_particleNet_XteVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XtmVsQCD)  return j_particleNet_XtmVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::XttVsQCD)  return j_particleNet_XttVsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::massCorr)  return j_particleNet_massCorr;
+        else {
+            cout << "[FatJet::GetTaggerResult] ERROR; Wrong ParticleNet object" << endl;
+            return -999;
+        }
+    }
+    else if (tg == JetTagging::FatJetTaggingtype::ParticleNetWithMass) {
+        if (obj == JetTagging::FatjetTaggingObject::H4qvsQCD)        return j_particleNetWithMass_H4qvsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::HccvsQCD)   return j_particleNetWithMass_HccvsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::HbbvsQCD)   return j_particleNetWithMass_HbbvsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::QCD)        return j_particleNetWithMass_QCD;
+        else if (obj == JetTagging::FatjetTaggingObject::TvsQCD)     return j_particleNetWithMass_TvsQCD;  // 공백 제거
+        else if (obj == JetTagging::FatjetTaggingObject::WvsQCD)     return j_particleNetWithMass_WvsQCD;
+        else if (obj == JetTagging::FatjetTaggingObject::ZvsQCD)     return j_particleNetWithMass_ZvsQCD;
+        else {
+            cout << "[FatJet::GetTaggerResult] ERROR; Wrong ParticleNetWithMass object" << endl;
+            return -999;
+        }
+    }
+    else {
+        cout << "[FatJet::GetTaggerResult] ERROR; Wrong tagger type" << endl;
         return -999;
     }
+}
 
-}*/

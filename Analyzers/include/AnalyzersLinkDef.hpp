@@ -5,7 +5,6 @@
 
 #pragma link C++ class SKNanoLoader+;
 #pragma link C++ class AnalyzerCore+;
-#pragma link C++ class ExampleRun+;
 #pragma link C++ class GetEffLumi+;
 #pragma link C++ class MeasureJetTaggingEff+;
 #pragma link C++ class MeasureJetTaggingR+;
@@ -19,7 +18,5 @@
 #pragma link C++ class ParseMuIDVariables+;
 #pragma link C++ class TestGetLeptonType+;
 #pragma link C++ class LRSM_TBChannel+;
-#pragma link C++ class LRSM_TBChannel_test+;
-#pragma link C++ class LRSM_TBChannel_2AK8+;
 #pragma link C++ class TTbar_test+;
 #pragma link C++ class DY+;

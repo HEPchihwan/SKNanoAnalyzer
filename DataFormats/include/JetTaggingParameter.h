@@ -28,6 +28,33 @@ namespace JetTagging
         shape,
         wp
     };
+    enum class FatJetTaggingtype {
+        DeepDoubleX,
+        DeepCSV,
+        ParticleNet,
+        ParticleNetWithMass,
+        HiggsToBB
+    };
+    enum class FatjetTaggingObject{
+        H4qvsQCD,
+        HccvsQCD,
+        HbbvsQCD,
+        QCD,
+        QCD0HF,
+        QCD1HF,
+        QCD2HF,
+        TvsQCD,
+        WvsQCD,
+        ZvsQCD,
+        XbbVsQCD,
+        XccVsQCD,
+        XqqVsQCD,
+        XggVsQCD,
+        XteVsQCD,
+        XtmVsQCD,
+        XttVsQCD,
+        massCorr
+    };
     //string version of JetTaggingSFMethod
     inline TString GetJetTaggingSFMethodStr(JetTaggingSFMethod method) {
         switch (method)

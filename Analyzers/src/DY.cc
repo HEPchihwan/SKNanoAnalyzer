@@ -48,14 +48,14 @@ void DY::initializeAnalyzer() {
     cout << "[DY::initializeAnalyzer] TriggerSafePtCut = " << TriggerSafePtCut << endl;
     
     // Initialize corrections
-    myCorr = new MyCorrection(DataEra, IsDATA ? DataStream : MCSample, IsDATA);
+    myCorr = new MyCorrection(DataEra, DataPeriod, IsDATA ? DataStream : MCSample, IsDATA);
     
     // Initialize systematic helper
     string SKNANO_HOME = getenv("SKNANO_HOME");
     if (IsDATA) {
-        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/noSyst.yaml", DataStream);
+        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/noSyst.yaml", DataStream, DataEra);
     } else {
-        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/ExampleSystematic.yaml", MCSample);
+        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/ExampleSystematic.yaml", MCSample, DataEra);
     }
     
     cout << "[DY::initializeAnalyzer] Initialization complete" << endl;

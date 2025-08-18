@@ -47,7 +47,7 @@ void TTbar_test::initializeAnalyzer() {
     cout << "[TTbar_test::initializeAnalyzer] TriggerSafePtCut = " << TriggerSafePtCut << endl;
     
     // Initialize corrections
-    myCorr = new MyCorrection(DataEra, IsDATA ? DataStream : MCSample, IsDATA);
+    myCorr = new MyCorrection(DataEra, DataPeriod, IsDATA ? DataStream : MCSample, IsDATA);
     
     // Initialize systematic helper
     string SKNANO_HOME = getenv("SKNANO_HOME");

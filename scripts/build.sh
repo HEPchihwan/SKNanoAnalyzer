@@ -9,7 +9,7 @@ echo @@@@ Prepare to build SKNanoAnalyzer in $SKNANO_BUILDDIR
 rm -rf $SKNANO_BUILDDIR $SKNANO_LIB 
 mkdir -p $SKNANO_BUILDDIR && cd $SKNANO_BUILDDIR
 
-export CORRECTION_CMAKE_PREFIX=`correction config --cmake`
+export CORRECTION_CMAKE_PREFIX=`python -m correctionlib.cli config --cmake`
 if [ $use_ninja -eq 1 ]; then
     echo @@@@ cmake -DCMAKE_INSTALL_PREFIX=$SKNANO_INSTALLDIR $CORRECTION_CMAKE_PREFIX $SKNANO_HOME -GNinja -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$LIBTORCH_INSTALL_DIR
     cmake -DCMAKE_INSTALL_PREFIX=$SKNANO_INSTALLDIR $CORRECTION_CMAKE_PREFIX $SKNANO_HOME -GNinja -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$LIBTORCH_INSTALL_DIR
