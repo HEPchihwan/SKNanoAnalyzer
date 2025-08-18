@@ -112,3 +112,83 @@ The framework supports unified analysis across data-taking periods:
 - **Run 3**: 2022, 2022EE, 2023, 2023BPix
 
 Era-specific corrections and configurations are automatically loaded based on the `-e` flag in job submission.
+
+## Environment Setup and Troubleshooting
+
+### Common Issues and Solutions
+
+#### ROOT and Library Conflicts
+- **GLIBCXX Version Conflicts**: If ROOT commands (like `hadd`) fail with GLIBCXX version errors:
+  - The issue occurs when conda ROOT requires newer GLIBCXX than system libstdc++
+  - Solution: setup.sh automatically prioritizes conda environment libraries in LD_LIBRARY_PATH
+  - A libstdc++.so.6 symlink is created in conda environment if needed
+
+#### Missing Dependencies
+- **HTCondor Python Module**: Install with `micromamba install -y htcondor`
+  - Provides python-htcondor, htcondor-cli, htcondor-utils packages
+  - Required for job submission and management
+
+- **Boost Libraries**: Install complete Boost package:
+  ```bash
+  micromamba install -c conda-forge boost-cpp libboost-devel
+  ```
+  - Provides headers in `$CONDA_PREFIX/include/boost/`
+  - CMakeLists.txt automatically detects ROOT's built-in Boost or conda Boost
+
+#### CMake Configuration Issues
+- **correctionlib Not Found**: CMakeLists.txt sets correctionlib path explicitly:
+  ```cmake
+  set(correctionlib_DIR "/path/to/conda/lib/python3.9/site-packages/correctionlib/cmake")
+  ```
+  - Path is automatically configured based on conda environment
+  - Use `correction config --cmake` to get the correct path
+
+- **CMAKE_PREFIX_PATH**: Automatically includes conda environment:
+  ```cmake
+  set(CMAKE_PREFIX_PATH "$CONDA_PREFIX;${CMAKE_PREFIX_PATH}")
+  ```
+
+- **yaml-cpp ABI Compatibility Issues**: If build fails with yaml-cpp linking errors:
+  ```bash
+  # Install conda yaml-cpp to avoid ABI conflicts
+  micromamba install -y yaml-cpp
+  ```
+  - CMakeLists.txt automatically prefers system yaml-cpp over FetchContent
+  - AnalyzerTools links to `yaml-cpp` (not `yaml-cpp::yaml-cpp`) for compatibility
+  - Clean build directory if switching from FetchContent to system version
+
+### Environment Variables Set by setup.sh
+- **CONDA_PREFIX**: Explicitly set to conda environment path for CMake
+- **LD_LIBRARY_PATH**: Prioritizes conda libraries over system libraries
+- **CORRECTION_INCLUDE_DIR/CORRECTION_LIB_DIR**: For correctionlib integration
+- **ONNXRUNTIME_INCLUDE_DIR/ONNXRUNTIME_LIB_DIR**: For ML inference
+- **LHAPDF_***: Paths for PDF sets and libraries
+
+### Build System Enhancements
+- **Automatic Boost Detection**: CMakeLists.txt checks multiple sources:
+  1. ROOT's built-in Boost (preferred)
+  2. Conda environment Boost
+  3. System Boost (fallback)
+- **Library Priority**: conda libraries take precedence to avoid version conflicts
+- **Multi-threading**: Uses `make -j6` for parallel compilation
+
+### Verification Commands
+```bash
+# Test ROOT functionality
+source setup.sh && hadd --help
+
+# Verify HTCondor Python module
+source setup.sh && python -c "import htcondor; print('HTCondor version:', htcondor.version())"
+
+# Check cmake dependencies
+source setup.sh && correction config --cmake
+
+# Test build system
+source setup.sh && ./scripts/build.sh
+```
+
+### Notes for Future Maintenance
+- Always run `source setup.sh` before building or running analyses
+- The setup script handles conda environment activation and library path configuration
+- CMake configuration is robust against missing environment variables
+- All paths are automatically detected based on the active conda environment

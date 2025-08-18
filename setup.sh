@@ -71,7 +71,7 @@ if [ $PACKAGE = "conda" ]; then
         conda activate torch
     else
         source ~/.conda-activate
-        conda activate nano
+        conda activate Nano
     fi
 elif [ $PACKAGE = "mamba" ]; then
     echo -e "\033[32m@@@@ Primary environment using mamba\033[0m"
