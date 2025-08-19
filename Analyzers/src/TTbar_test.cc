@@ -52,9 +52,9 @@ void TTbar_test::initializeAnalyzer() {
     // Initialize systematic helper
     string SKNANO_HOME = getenv("SKNANO_HOME");
     if (IsDATA) {
-        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/noSyst.yaml", DataStream);
+        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/noSyst.yaml", DataStream, DataEra);
     } else {
-        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/ExampleSystematic.yaml", MCSample);
+        systHelper = std::make_unique<SystematicHelper>(SKNANO_HOME + "/docs/ExampleSystematic.yaml", MCSample, DataEra);
     }
     
     cout << "[TTbar_test::initializeAnalyzer] Initialization complete" << endl;
@@ -117,8 +117,8 @@ void TTbar_test::executeEventFromParameter() {
     FillHist(this_syst + "/CutFlow", 4.0, 1.0, 10, 0., 10.); // 2 light jets selected
     
     // Get MET information
-    float met_pt = ev.GetMETVector(Event::MET_Type::PUPPI,MyCorrection::variation::nom,Event::MET_Syst::CENTRAL).Pt();
-    float met_phi = ev.GetMETVector(Event::MET_Type::PUPPI,MyCorrection::variation::nom,Event::MET_Syst::CENTRAL).Phi();
+    float met_pt = ev.GetMETVector(Event::MET_Type::PUPPI,Event::MET_Syst::CENTRAL).Pt();
+    float met_phi = ev.GetMETVector(Event::MET_Type::PUPPI,Event::MET_Syst::CENTRAL).Phi();
     
     if (met_pt <= cuts.met_pt) return;
     FillHist(this_syst + "/CutFlow", 5.0, 1.0, 10, 0., 10.); // MET cut
