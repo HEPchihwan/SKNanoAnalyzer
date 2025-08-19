@@ -31,8 +31,8 @@ void DY::initializeAnalyzer() {
         IsoMuTriggerName = "HLT_IsoMu24";
         TriggerSafePtCut = 26.;
     } else if (DataEra == "2022EE") {
-        IsoMuTriggerName = "HLT_Mu15";
-        TriggerSafePtCut = 15.;
+        IsoMuTriggerName = "HLT_IsoMu24";
+        TriggerSafePtCut = 26.;
     } else if (DataEra == "2023") {
         IsoMuTriggerName = "HLT_IsoMu24";
         TriggerSafePtCut = 26.;
