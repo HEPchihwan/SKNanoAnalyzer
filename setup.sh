@@ -26,7 +26,7 @@ fi
 # Set up environment
 export SKNANO_HOME=`pwd`
 export SKNANO_RUNLOG="/gv0/Users/$USER/SKNanoRunlog"
-export SKNANO_OUTPUT="/data6/Users/$USER/SKNanoOutput"
+export SKNANO_OUTPUT="/gv0/Users/$USER/SKNanoOutput"
 echo "@@@@ Working Directory: $SKNANO_HOME"
 
 CONFIG_FILE="$SKNANO_HOME/config/config.$USER"
